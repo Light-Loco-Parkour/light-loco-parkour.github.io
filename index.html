@@ -1,0 +1,1413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="LightParkour uses humanoid parkour as a testbed for contact-rich skill learning. It grounds short human-motion clips in physics, grows each seed across terrain variation, and distills locomotion and whole-body skills into one deployable depth policy."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2026-08-03T00:00:00+08:00" />
+    <meta property="article:modified_time" content="2026-08-03T00:00:00+08:00" />
+    <meta name="date" content="2026-08-03" />
+    <meta property="og:title" content="Growing Humanoid Parkour Skills through Real2Sim2Real" />
+    <meta
+      property="og:description"
+      content="LightParkour uses humanoid parkour as a testbed for contact-rich skill learning. It grounds short human-motion clips in physics, grows each seed across terrain variation, and distills locomotion and whole-body skills into one deployable depth policy."
+    />
+    <meta property="og:image" content="og-v2.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Growing Humanoid Parkour Skills through Real2Sim2Real" />
+    <meta
+      name="twitter:description"
+      content="LightParkour uses humanoid parkour as a testbed for contact-rich skill learning. It grounds short human-motion clips in physics, grows each seed across terrain variation, and distills locomotion and whole-body skills into one deployable depth policy."
+    />
+    <meta name="twitter:image" content="og-v2.png" />
+    <title>Growing Humanoid Parkour Skills through Real2Sim2Real — LightParkour</title>
+    <link
+      rel="shortcut icon"
+      href="favicon.ico?v=lightorigins-1"
+      type="image/x-icon"
+      sizes="16x16 24x24 32x32 48x48 64x64"
+    />
+    <link
+      rel="preload"
+      href="fonts/geist-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="fonts/geist-mono-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="styles.css?v=kicker-45" />
+  </head>
+  <body>
+    <main id="top">
+      <header class="topbar">
+        <div class="topbar-inner page-width">
+          <a class="brand" href="#top" aria-label="Light Origins research">
+            <span class="brand-mark">LO</span>
+            <span>Light Origins / Research</span>
+          </a>
+
+          <button
+            class="menu-button"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-controls="primary-navigation"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+          </button>
+
+          <nav id="primary-navigation" class="topnav" aria-label="Primary">
+            <a href="#overview">Why</a>
+            <a href="#method">How</a>
+            <a href="#results">Proof</a>
+            <a href="#paper">Paper</a>
+          </nav>
+        </div>
+      </header>
+
+      <article>
+        <header class="article-header page-width">
+          <p class="article-label">
+            LightParkour · Whole-body intelligence ·
+            <time datetime="2026-08-03">3 August 2026</time>
+          </p>
+          <div class="hero-title-stage">
+            <h1>Growing Humanoid Parkour Skills through Real2Sim2Real</h1>
+          </div>
+          <p class="article-summary">
+            LightParkour uses humanoid parkour as a testbed for contact-rich
+            skill learning. It grounds short human-motion clips in physics,
+            grows each seed across terrain variation, and distills locomotion
+            and whole-body skills into one deployable depth policy.
+          </p>
+
+          <div class="hero-tree-field" aria-hidden="true">
+            <canvas class="hero-tree-canvas" data-hero-tree></canvas>
+          </div>
+
+        </header>
+
+        <figure class="hero-figure page-width">
+          <div class="video-shell is-paused">
+            <video
+              src="media/real-world-highlight.mp4"
+              poster="media/hero-cover-v2.jpg"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="LightParkour real-world highlights"
+            ></video>
+            <div class="media-surface" aria-hidden="true"></div>
+            <div class="media-hud" aria-hidden="true">
+              <span class="media-hud-eyebrow">LightParkour / field reel</span>
+            </div>
+            <label class="media-timeline">
+              <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek LightParkour real-world highlights" />
+              <output aria-hidden="true">0:00 / 0:00</output>
+            </label>
+            <button
+              class="media-control"
+              type="button"
+              aria-label="Play LightParkour real-world highlights"
+            >
+              <span aria-hidden="true">Play</span>
+            </button>
+          </div>
+          <figcaption class="figure-caption">
+            <span>01</span>
+            <p>
+              <strong>One policy across locomotion and parkour.</strong>
+              A single onboard policy drives both locomotion and contact-rich
+              parkour on Lightbot 0.
+            </p>
+          </figcaption>
+        </figure>
+
+        <div class="article-credits page-width">
+          <div class="article-meta">
+            <p>
+              Hongming Chen, Zhuoran Li, Hongxi Wang, Jiangpeng Hu, Ziliang Li,
+              Peize Liu, QingRui Zhao, Xuhao Liu, Liang Pan, Ximin Lyu,
+              Yuntao Ma<sup>†</sup>, Tingxiang Fan<sup>†</sup>
+              <span>† Robotics team co-leads.</span>
+            </p>
+            <p>
+              <strong>Light Origins</strong>
+              <span>
+                Versatile Perceptive Whole-Body Locomotion via Multi-Skill
+                Distillation
+              </span>
+            </p>
+          </div>
+
+          <div class="article-actions">
+            <a href="#overview">
+              Follow the story <span aria-hidden="true">↓</span>
+            </a>
+            <a
+              href="paper.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read the paper <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              href="https://youtu.be/96Rfm7OmHjY"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Watch on YouTube <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <section class="essay-section page-width" id="overview">
+          <div class="essay-prose">
+            <p class="section-label">The real data problem</p>
+            <h2>A motion without its obstacle is only half a demonstration.</h2>
+            <p class="chapter-lead">
+              Parkour makes the central difficulty of contact-rich behavior
+              explicit: the environment becomes part of the robot&rsquo;s support
+              structure. Success depends on where contact lands, when it bears
+              load, and how the motion adapts as geometry changes.
+            </p>
+            <p>
+              Motion-tracking policies reproduce expressive whole-body skills
+              but remain tied to the demonstrated scene. Reward-driven
+              locomotion adapts to terrain, yet tends toward leg-dominant
+              behavior. Neither alone produces geometry-aware, load-bearing
+              contact.
+            </p>
+            <p>
+              Motion capture and ordinary video preserve movement, but rarely
+              the scene that made it possible. Direct retargeting can leave
+              hands floating, limbs intersecting obstacles, or trajectories
+              the robot cannot execute.
+            </p>
+            <p>
+              Collecting a new demonstration for every obstacle restores the
+              correspondence, but scales linearly with skill, contact pattern,
+              and terrain. LightParkour instead recovers one short seed per
+              skill and lets simulation generate the variation.
+            </p>
+          </div>
+        </section>
+
+        <section class="essay-section page-width" id="method">
+          <div class="essay-prose">
+            <p class="section-label">Real2Sim2Real</p>
+            <h2>Simulation rebuilds the interaction, then expands it across terrain.</h2>
+            <p class="chapter-lead">
+              Real2Sim2Real turns each seed into a deployable skill family:
+              physics restores valid contact, successful rollouts expand the
+              terrain range, and distillation produces one recurrent depth
+              policy.
+            </p>
+          </div>
+
+          <ol class="real2sim-steps reveal" aria-label="Real-to-simulation-to-real workflow">
+            <li>
+              <span>Real</span>
+              <strong>Recover interaction intent</strong>
+              <p>Whole-body timing and intended contacts from the source clip.</p>
+            </li>
+            <li>
+              <span>Sim</span>
+              <strong>Ground it in physics</strong>
+              <p>Obstacle geometry, contact forces, and the robot&rsquo;s actuator limits&mdash;then expansion across a range of obstacles.</p>
+            </li>
+            <li>
+              <span>Real</span>
+              <strong>Deploy from perception</strong>
+              <p>One depth policy acts without a runtime motion reference.</p>
+            </li>
+          </ol>
+
+          <div class="essay-pair real2sim-pair reveal" id="real2sim2real">
+            <figure>
+              <div class="video-shell is-paused">
+                <video
+                  data-src="media/speed-real2sim2real.mp4"
+                  poster="media/speed-real2sim2real-poster.jpg"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label="Speed vault from human motion to simulation to hardware"
+                ></video>
+                <div class="media-surface" aria-hidden="true"></div>
+                <div class="media-hud" aria-hidden="true">
+                  <span class="media-hud-eyebrow">Real &rarr; Sim &rarr; Real</span>
+                </div>
+                <label class="media-timeline">
+                  <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek speed-vault real-to-simulation-to-real sequence" />
+                  <output aria-hidden="true">0:00 / 0:00</output>
+                </label>
+                <button class="media-control" type="button" aria-label="Play speed-vault real-to-simulation-to-real sequence">
+                  <span aria-hidden="true">Play</span>
+                </button>
+              </div>
+              <figcaption class="figure-caption">
+                <span>02</span>
+                <p>
+                  <strong>Speed vault.</strong>
+                  Human motion &rarr; physics-grounded reference &rarr; onboard execution.
+                </p>
+              </figcaption>
+            </figure>
+
+            <figure>
+              <div class="video-shell is-paused">
+                <video
+                  data-src="media/reverse-real2sim2real.mp4"
+                  poster="media/reverse-real2sim2real-poster.jpg"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label="Reverse vault from human motion to simulation to hardware"
+                ></video>
+                <div class="media-surface" aria-hidden="true"></div>
+                <div class="media-hud" aria-hidden="true">
+                  <span class="media-hud-eyebrow">Real &rarr; Sim &rarr; Real</span>
+                </div>
+                <label class="media-timeline">
+                  <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek reverse-vault real-to-simulation-to-real sequence" />
+                  <output aria-hidden="true">0:00 / 0:00</output>
+                </label>
+                <button class="media-control" type="button" aria-label="Play reverse-vault real-to-simulation-to-real sequence">
+                  <span aria-hidden="true">Play</span>
+                </button>
+              </div>
+              <figcaption class="figure-caption">
+                <span>03</span>
+                <p>
+                  <strong>Reverse vault.</strong>
+                  Human motion &rarr; physics-grounded reference &rarr; onboard execution.
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="essay-prose">
+            <h3>Physics repairs what retargeting breaks.</h3>
+            <p>
+              We retarget the source motion and place the obstacle where it
+              implies load-bearing contact. The initial pair is physically
+              invalid: hands sink, knees clip, and human dynamics exceed the
+              robot&rsquo;s limits. A tracking policy repairs the interaction under
+              full physics, anchoring intended contacts and restarting from
+              random reference frames to expose critical phases. The maneuver
+              is preserved; the trajectory becomes executable.
+            </p>
+          </div>
+
+          <figure class="essay-figure reveal">
+            <div class="video-shell is-paused">
+              <video
+                data-src="media/reference-motion.mp4"
+                poster="media/reference-motion-poster.jpg"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Terrain-conditioned reference motion refinement"
+              ></video>
+              <div class="media-surface" aria-hidden="true"></div>
+              <div class="media-hud" aria-hidden="true">
+                <span class="media-hud-eyebrow">Simulation / curriculum</span>
+              </div>
+              <label class="media-timeline">
+                <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek terrain-conditioned reference motion refinement" />
+                <output aria-hidden="true">0:00 / 0:00</output>
+              </label>
+              <button
+                class="media-control"
+                type="button"
+                aria-label="Play terrain-conditioned reference motion refinement"
+              >
+                <span aria-hidden="true">Play</span>
+              </button>
+            </div>
+            <figcaption class="figure-caption">
+              <span>04</span>
+              <p>
+                <strong>Iterative reference refinement.</strong>
+                From an obstacle-misaligned seed to terrain-paired, dynamically
+                feasible references.
+              </p>
+            </figcaption>
+          </figure>
+
+          <div class="essay-prose">
+            <h3>Each successful rollout raises the obstacle.</h3>
+            <p>
+              Each successful rollout becomes the next reference, feasible by
+              construction under full physics and actuator limits. We raise
+              the motion and obstacle by 5&ndash;10 cm and train again. Iteration
+              grows one 45 cm climb into a continuous family through 75
+              cm&mdash;83% of the 90 cm robot&rsquo;s standing height.
+            </p>
+          </div>
+
+          <div class="essay-stats reveal" role="group" aria-label="Reference range">
+            <div>
+              <strong>45 cm</strong>
+              <span>Seed obstacle</span>
+            </div>
+            <div>
+              <strong>45&ndash;75 cm</strong>
+              <span>Generated reference range</span>
+            </div>
+            <div>
+              <strong>0.83H</strong>
+              <span>Relative obstacle height</span>
+            </div>
+          </div>
+
+          <div class="essay-prose">
+            <p class="disclosure">
+              Only the initial motion&ndash;obstacle pair is aligned manually;
+              physics and curriculum drive the remaining expansion.
+            </p>
+          </div>
+
+          <div class="essay-prose">
+            <h3>The family compresses into one policy.</h3>
+            <p class="chapter-lead">
+              A motion seed specifies interaction intent, not a deployable
+              trajectory. Simulation builds a family of feasible contact
+              strategies. Privileged teachers learn those families;
+              multi-expert and recurrent depth distillation compress them into
+              one onboard policy.
+            </p>
+          </div>
+        </section>
+
+        <figure class="media-figure page-width pipeline">
+          <div
+            id="system-map"
+            class="pipeline-map pipeline-map-v2"
+            data-pipeline-flow
+            role="img"
+            aria-label="The complete LightParkour training system. In reference generation, one locomotion teacher and three whole-body skill teachers roll out in simulation to grow sparse seeds into terrain-paired references. Multi-expert DAgger and reward-only transition learning unify those experts. Recurrent depth distillation compresses privileged geometry into one onboard policy running from a depth camera at 50 hertz."
+          >
+            <header class="system-map-header-v2">
+              <div>
+                <p class="pipeline-eyebrow">LightParkour / system</p>
+                <h3>The whole loop, stage by stage.</h3>
+              </div>
+            </header>
+
+            <div class="system-atlas-v4">
+              <section id="system-reference" class="system-stage-v4 system-stage-reference-v4">
+                <header class="system-stage-header-v4">
+                  <span>01</span><small>Reference generation</small>
+                  <h4>Grow one seed into a skill family.</h4>
+                </header>
+                <div class="system-stage-board-v4 system-reference-board-v4">
+                  <article class="system-motion-lab-v5">
+                    <header>
+                      <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><circle cx="18.4" cy="8.3" r="2.3" fill="currentColor" stroke="none" /><path d="M9.4 21.8 C12 19.6 13.2 17.8 14.3 15.6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M14.3 15.6 L15.6 19.3 L18.9 21.8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M14.3 15.6 L17.2 10.6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M12.4 12.8 L17 12.3 L19.9 14.7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Recovered motion seed</span></div>
+                      <strong>50 Hz</strong>
+                    </header>
+                    <div class="system-motion-viewport-v5">
+                      <canvas class="system-motion-canvas-v5" data-motion-seed="./data/motion-seed.json" aria-hidden="true"></canvas>
+                      <div class="system-motion-phases-v5" aria-hidden="true"><span data-motion-phase="seed">Seed</span><span data-motion-phase="ground">Ground</span><span data-motion-phase="grow">Grow</span></div>
+                    </div>
+                  </article>
+                  <span class="system-flow-v4" data-label="References" aria-hidden="true"></span>
+                  <article class="system-node-v4 system-rl-node-v5">
+                    <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><path d="M6 22.7 H24" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><rect x="16.2" y="16.6" width="6.4" height="6.1" rx="1" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.4" /><path d="M7 20.6 C9.6 12.4 14.6 10.2 19 13" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M20.9 14.6 L19.4 10.6 L16.4 13.2 Z" fill="currentColor" stroke="none" /></svg><span>RL stage · Isaac Sim</span></div>
+                    <strong>Four privileged teachers</strong>
+                    <p>Locomotion + three contact-rich skills track the references under full physics.</p>
+                  </article>
+                  <span class="system-flow-v4" data-label="Successes" aria-hidden="true"></span>
+                  <article class="system-node-v4 system-asset-node-v4">
+                    <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><path d="M6 22.7 H24" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><rect x="7.2" y="18.2" width="4.2" height="4.5" rx="0.8" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.4" /><rect x="12.9" y="15.4" width="4.2" height="7.3" rx="0.8" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.4" /><rect x="18.6" y="12.2" width="4.2" height="10.5" rx="0.8" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.4" /><circle cx="9.3" cy="18.2" r="1.15" fill="currentColor" stroke="none" /><circle cx="15" cy="15.4" r="1.15" fill="currentColor" stroke="none" /><circle cx="20.7" cy="12.2" r="1.15" fill="currentColor" stroke="none" /></svg><span>Generated asset</span></div>
+                    <strong>Terrain-paired references</strong><data>45 → 75 cm</data>
+                    <svg class="system-family-glyph-v5" viewBox="0 0 148 44" aria-hidden="true">
+                      <path class="system-fam-ground-v5" d="M3 40.5 H145" />
+                      <g style="--i:0"><rect x="12" y="29.5" width="19" height="11" rx="1.5" /><circle cx="21.5" cy="29.5" r="2.1" /></g>
+                      <g style="--i:1"><rect x="38" y="25.5" width="19" height="15" rx="1.5" /><circle cx="47.5" cy="25.5" r="2.1" /></g>
+                      <g style="--i:2"><rect x="64" y="21.5" width="19" height="19" rx="1.5" /><circle cx="73.5" cy="21.5" r="2.1" /></g>
+                      <g style="--i:3"><rect x="90" y="17.5" width="19" height="23" rx="1.5" /><circle cx="99.5" cy="17.5" r="2.1" /></g>
+                      <g style="--i:4"><rect x="116" y="13.5" width="19" height="27" rx="1.5" /><circle cx="125.5" cy="13.5" r="2.1" /></g>
+                    </svg>
+                  </article>
+                  <div class="system-curriculum-loop-v4 system-loop-channel-v5"><i class="system-loop-arm-v5 system-loop-arm-up-v5" aria-hidden="true"></i><i class="system-loop-arm-v5 system-loop-arm-down-v5" aria-hidden="true"></i><span>Curriculum loop</span><p>Success becomes the next reference; the obstacle rises 5–10 cm.</p></div>
+                </div>
+              </section>
+
+              <section id="system-distill" class="system-stage-v4 system-stage-distill-v4">
+                <header class="system-stage-header-v4">
+                  <span>02</span><small>Multi-skill distillation</small>
+                  <h4>Unify skills. Learn the handoff.</h4>
+                </header>
+                <div class="system-stage-board-v4 system-distill-board-v4">
+                  <div class="system-expert-rack-v4">
+                    <article><span>Locomotion</span><i>πp</i></article><article><span>Climb + step</span><i>π1</i></article><article><span>Speed vault</span><i>π2</i></article><article><span>Reverse vault</span><i>π3</i></article>
+                    <p>Multi-expert DAgger</p>
+                  </div>
+                  <div class="system-distill-path-v4">
+                    <article class="system-node-v4 system-unified-node-v4">
+                      <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><path d="M6.8 9.2 C13 9.2 14.6 15 20.2 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M6.8 15 H20.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M6.8 20.8 C13 20.8 14.6 15 20.2 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><circle cx="21.6" cy="15" r="2.5" fill="currentColor" stroke="none" /></svg><span>Unified teacher</span></div>
+                      <strong>One height-scan policy</strong><p>Locomotion and whole-body skills share one action space.</p>
+                    </article>
+                    <span class="system-flow-v4" data-label="Mixed courses" aria-hidden="true"></span>
+                    <article class="system-transition-node-v4">
+                      <header><span>Transition group</span><strong>Reward-only handoff</strong></header>
+                      <b>No expert. No reference. No runtime skill label.</b>
+                    </article>
+                  </div>
+                </div>
+              </section>
+
+              <section id="system-depth" class="system-stage-v4 system-stage-depth-v4">
+                <header class="system-stage-header-v4">
+                  <span>03</span><small>Depth distillation</small>
+                  <h4>Compress privileged geometry into depth.</h4>
+                </header>
+                <div class="system-stage-board-v4 system-depth-board-v4">
+                  <div class="system-deploy-path-v4">
+                    <article class="system-node-v4 system-observation-node-v4">
+                      <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><circle cx="7.8" cy="15" r="1.7" fill="currentColor" stroke="none" /><path d="M9.4 13.4 L21.8 7.8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M9.4 16.6 L21.8 22.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M14.6 11.6 A6.2 6.2 0 0 1 14.6 18.4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M18.6 9.8 A10.5 10.5 0 0 1 18.6 20.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Student input</span></div>
+                      <strong>Onboard observation</strong><p>Depth image · proprioception · command</p>
+                    </article>
+                    <span class="system-flow-v4" aria-hidden="true"></span>
+                    <article class="system-node-v4 system-recurrent-node-v4">
+                      <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><path d="M21.4 15 A6.4 6.4 0 1 1 18.6 9.8" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M16.6 6.5 L19.3 10.3 L14.9 11 Z" fill="currentColor" stroke="none" /><circle cx="15" cy="15" r="1.5" fill="currentColor" stroke="none" /></svg><span>Recurrent student</span></div>
+                      <div class="system-network-chain-v4"><span>MLP</span><i>→</i><span>GRU</span><i>→</i><span>MLP</span></div>
+                    </article>
+                    <span class="system-flow-v4" aria-hidden="true"></span>
+                    <article class="system-node-v4 system-onboard-node-v4">
+                      <div class="system-node-title-v4"><svg class="system-glyph-v4 system-icon-v6" viewBox="0 0 30 30" aria-hidden="true"><rect x="6.6" y="10.2" width="16.8" height="11.6" rx="2.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M11.4 10.2 L12.9 7.6 H17.1 L18.6 10.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><circle cx="15" cy="15.9" r="3.3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><circle cx="15" cy="15.9" r="1.05" fill="currentColor" stroke="none" /></svg><span>Onboard</span></div>
+                      <strong>Action at 50 Hz</strong><data>1 depth camera</data>
+                    </article>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+          <figcaption class="figure-caption">
+            <span>05</span>
+            <p>
+              <strong>The complete LightParkour training system.</strong>
+              Reference generation grows terrain-paired references; multi-expert
+              distillation unifies the skills; reward-only transition training
+              learns the handoff; recurrent depth distillation produces a
+              single 50 Hz onboard policy.
+            </p>
+          </figcaption>
+        </figure>
+
+        <div class="essay-prose essay-follow page-width">
+          <p>
+            Multi-expert distillation consolidates the experts&rsquo; behaviors into
+            one policy. Reward-only transition training then teaches it when to
+            leave locomotion, enter a whole-body skill, and return. At
+            deployment, depth and the velocity command drive those
+            decisions&mdash;without a skill label or hand-authored switch.
+          </p>
+          <p>
+            During a vault, the chest camera may lose sight of the obstacle just
+            as contact becomes load-bearing. Height-scan reconstruction trains
+            the recurrent state to carry recent geometry through the occlusion.
+            Training also models camera noise, dropout,
+            27&ndash;33 Hz frame rates, and 30&ndash;60 ms latency.
+          </p>
+        </div>
+
+        <section class="essay-section page-width" id="results">
+          <div class="essay-prose">
+            <p class="section-label">What proves it works</p>
+            <h2>The policy has to survive four tests.</h2>
+            <p class="chapter-lead">
+              The evaluations test four requirements of a deployable
+              contact-rich skill: physical feasibility, adaptation to geometry,
+              composition across contact modes, and execution from onboard
+              perception. All quantitative results are from simulation;
+              hardware videos show transfer without real-world fine-tuning.
+            </p>
+          </div>
+        </section>
+
+        <div class="evidence-stack page-width">
+          <figure class="data-figure">
+            <header class="chart-head">
+              <div>
+                <p class="section-label">
+                  Operating range · Ablation
+                </p>
+                <h3>Fine-tuning and recurrence extend the deployable policy&rsquo;s operating range.</h3>
+                <p class="chart-deck">
+                  Climb-and-step success across four obstacle heights, with 500
+                  randomized simulation trials per setting.
+                </p>
+              </div>
+              <strong class="chart-kpi">
+                <span>90.0%</span>
+                <small>at 70 cm · 0.77H</small>
+              </strong>
+            </header>
+
+            <ul class="difficulty-legend" aria-label="Chart legend">
+              <li class="difficulty-legend-full">Full LightParkour</li>
+              <li class="difficulty-legend-fine-tune">No final task fine-tuning</li>
+              <li class="difficulty-legend-memory">No recurrent memory</li>
+              <li class="difficulty-legend-teacher">Privileged teacher · height scan</li>
+            </ul>
+
+            <div
+              class="difficulty-plot"
+              aria-label="Climb-and-step success by obstacle height and ablation"
+            >
+              <div class="difficulty-axis" aria-hidden="true">
+                <span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span>
+              </div>
+              <div class="difficulty-stage">
+                <div class="difficulty-grid" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="difficulty-groups">
+                  <article class="difficulty-group" data-height="60 cm" data-full="99.2" data-no-ft="88.4" data-no-gru="54" data-teacher="99.9">
+                    <div class="difficulty-measure">
+                      <span class="difficulty-teacher-tick" style="--teacher: 99.9%">
+                        <span class="difficulty-teacher-name">Privileged teacher</span>
+                        <span class="difficulty-teacher-track" aria-hidden="true"><span></span></span>
+                        <data value="99.9">99.9%</data>
+                      </span>
+                      <div class="difficulty-bars">
+                        <div class="difficulty-bar difficulty-bar-full" style="--value: 99.2%">
+                          <span class="difficulty-bar-name">Full LightParkour</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="99.2">99.2%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-fine-tune" style="--value: 88.4%">
+                          <span class="difficulty-bar-name">No final task fine-tuning</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="88.4">88.4%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-memory" style="--value: 54%">
+                          <span class="difficulty-bar-name">No recurrent memory</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="54">54.0%</data>
+                        </div>
+                      </div>
+                    </div>
+                    <header class="difficulty-group-head"><h4>60 cm</h4><p>0.66H</p></header>
+                  </article>
+
+                  <article class="difficulty-group" data-height="65 cm" data-full="98.8" data-no-ft="89.8" data-no-gru="56.6" data-teacher="99.2">
+                    <div class="difficulty-measure">
+                      <span class="difficulty-teacher-tick" style="--teacher: 99.2%">
+                        <span class="difficulty-teacher-name">Privileged teacher</span>
+                        <span class="difficulty-teacher-track" aria-hidden="true"><span></span></span>
+                        <data value="99.2">99.2%</data>
+                      </span>
+                      <div class="difficulty-bars">
+                        <div class="difficulty-bar difficulty-bar-full" style="--value: 98.8%">
+                          <span class="difficulty-bar-name">Full LightParkour</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="98.8">98.8%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-fine-tune" style="--value: 89.8%">
+                          <span class="difficulty-bar-name">No final task fine-tuning</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="89.8">89.8%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-memory" style="--value: 56.6%">
+                          <span class="difficulty-bar-name">No recurrent memory</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="56.6">56.6%</data>
+                        </div>
+                      </div>
+                    </div>
+                    <header class="difficulty-group-head"><h4>65 cm</h4><p>0.72H</p></header>
+                  </article>
+
+                  <article class="difficulty-group" data-height="70 cm" data-full="90" data-no-ft="76.4" data-no-gru="34.2" data-teacher="99.2">
+                    <div class="difficulty-measure">
+                      <span class="difficulty-teacher-tick" style="--teacher: 99.2%">
+                        <span class="difficulty-teacher-name">Privileged teacher</span>
+                        <span class="difficulty-teacher-track" aria-hidden="true"><span></span></span>
+                        <data value="99.2">99.2%</data>
+                      </span>
+                      <div class="difficulty-bars">
+                        <div class="difficulty-bar difficulty-bar-full" style="--value: 90%">
+                          <span class="difficulty-bar-name">Full LightParkour</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="90">90.0%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-fine-tune" style="--value: 76.4%">
+                          <span class="difficulty-bar-name">No final task fine-tuning</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="76.4">76.4%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-memory" style="--value: 34.2%">
+                          <span class="difficulty-bar-name">No recurrent memory</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="34.2">34.2%</data>
+                        </div>
+                      </div>
+                    </div>
+                    <header class="difficulty-group-head"><h4>70 cm</h4><p>0.77H</p></header>
+                  </article>
+
+                  <article class="difficulty-group" data-height="75 cm" data-full="33.4" data-no-ft="17" data-no-gru="0" data-teacher="98.6">
+                    <div class="difficulty-measure">
+                      <span class="difficulty-teacher-tick" style="--teacher: 98.6%">
+                        <span class="difficulty-teacher-name">Privileged teacher</span>
+                        <span class="difficulty-teacher-track" aria-hidden="true"><span></span></span>
+                        <data value="98.6">98.6%</data>
+                      </span>
+                      <div class="difficulty-bars">
+                        <div class="difficulty-bar difficulty-bar-full" style="--value: 33.4%">
+                          <span class="difficulty-bar-name">Full LightParkour</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="33.4">33.4%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-fine-tune" style="--value: 17%">
+                          <span class="difficulty-bar-name">No final task fine-tuning</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="17">17.0%</data>
+                        </div>
+                        <div class="difficulty-bar difficulty-bar-memory" style="--value: 0%">
+                          <span class="difficulty-bar-name">No recurrent memory</span>
+                          <span class="difficulty-bar-track" aria-hidden="true"><span class="difficulty-bar-fill"></span></span>
+                          <data value="0">0.0%</data>
+                        </div>
+                      </div>
+                    </div>
+                    <header class="difficulty-group-head"><h4>75 cm</h4><p>0.83H · frontier</p></header>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <aside class="augmentation-ablation">
+              <div>
+                <p class="section-label">Reference augmentation</p>
+                <strong>A seed can start a skill. It cannot define its operating envelope.</strong>
+              </div>
+              <div class="augmentation-outcomes" aria-label="Teacher without reference augmentation">
+                <span><small>60 cm</small><data value="99.9">99.9%</data></span>
+                <span><small>65 cm</small><b aria-label="Did not converge">DNC</b></span>
+                <span><small>70 cm</small><b aria-label="Did not converge">DNC</b></span>
+                <span><small>75 cm</small><b aria-label="Did not converge">DNC</b></span>
+              </div>
+              <p>
+                With only a single 60 cm reference, the privileged teacher
+                reaches 99.9% at 60 cm but does not converge at 65–75 cm under
+                the shared 15,000-iteration training budget. DNC denotes
+                failure to converge.
+              </p>
+            </aside>
+
+            <figcaption>
+              A 45 cm motion seed produces terrain-paired references through 75
+              cm. At the 75 cm frontier the deployable policy drops to 33.4%
+              while the privileged height-scan teacher holds at 98.6%, exposing
+              the perception-and-control gap.
+              <span class="benchmark-scope-note">
+                H denotes the robot&rsquo;s 90 cm standing height.
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="evidence-stack page-width">
+          <div class="evidence-pair evidence-single">
+            <figure class="data-figure composition-figure">
+              <header class="chart-head chart-head-compact">
+                <div>
+                  <p class="section-label">
+                    Autonomous composition · Ablation
+                  </p>
+                  <h3>Learned transitions turn isolated skills into continuous behavior.</h3>
+                </div>
+                <strong class="chart-delta">+65 pp</strong>
+              </header>
+              <dl class="bars bars-compact">
+                <div class="bar-row" style="--value: 33%">
+                  <dt>
+                    <strong>Isolated skills</strong>
+                    <span>No transition training</span>
+                  </dt>
+                  <dd>
+                    <span class="bar-track" aria-hidden="true"><span class="bar-fill"></span></span>
+                    <data value="33">33.0%</data>
+                  </dd>
+                </div>
+                <div class="bar-row bar-row-highlight" style="--value: 98%">
+                  <dt>
+                    <strong>Unified policy</strong>
+                    <span>With transition training</span>
+                  </dt>
+                  <dd>
+                    <span class="bar-track" aria-hidden="true"><span class="bar-fill"></span></span>
+                    <data value="98">98.0%</data>
+                  </dd>
+                </div>
+              </dl>
+              <figcaption>
+                End-to-end transition-and-skill success rate across 100
+                randomized trials. A trial counts as successful only when the
+                policy executes the correct handoff and completes the resulting
+                segment.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <section
+          class="motion-space-section essay-section page-width"
+          aria-labelledby="motion-space-title"
+        >
+          <div class="essay-prose">
+            <p class="section-label">
+              Inside the handoff · Policy memory
+            </p>
+            <h3 id="motion-space-title">
+              Transition training opens a route between the two behaviors.
+            </h3>
+            <p>
+              Multiple skills in one network do not create transitions by
+              themselves. With training, the hidden state leaves locomotion,
+              passes through transition states, and enters parkour when terrain
+              demands it; without training, trajectories remain in locomotion.
+              The view below links each state to a reconstructed pose. Read
+              temporal paths and local neighborhoods&mdash;not global cluster
+              distances.
+            </p>
+          </div>
+
+          <figure class="motion-space-figure">
+            <div class="motion-space-frame">
+              <iframe
+                id="transition-space-explorer"
+                src="interactive/transition-space.html?v=8"
+                title="Interactive t-SNE projection of LightParkour GRU policy hidden states and their corresponding reconstructed robot poses"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                style="height: 590px"
+              ></iframe>
+            </div>
+            <figcaption class="figure-caption">
+              <span>06</span>
+              <p>
+                <strong>A learned route through policy memory.</strong>
+                GRU hidden-state trajectories during transition rollouts,
+                colored by locomotion, transition, and parkour. Lines preserve rollout
+                order; each selected point is grounded in its corresponding
+                reconstructed pose. This qualitative view complements the
+                100-trial transition-success ablation above.
+              </p>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="essay-section page-width" id="deployment">
+          <div class="essay-prose">
+            <p class="section-label">Sim &rarr; Real</p>
+            <h2>On hardware, only the deployable policy remains.</h2>
+            <p>
+              Lightbot 0 is our custom 90 cm, 18.9 kg humanoid with 21
+              actuated joints. A single recurrent policy runs onboard at 50 Hz
+              from a chest-mounted depth camera, proprioception, and a velocity
+              command&mdash;with no runtime reference, skill label, external
+              tracking, or offboard state estimation.
+            </p>
+          </div>
+
+          <div class="essay-stats reveal" role="group" aria-label="Runtime facts">
+            <div>
+              <strong>1</strong>
+              <span>deployable policy</span>
+            </div>
+            <div>
+              <strong>50 Hz</strong>
+              <span>onboard control</span>
+            </div>
+            <div>
+              <strong>0</strong>
+              <span>runtime references</span>
+            </div>
+          </div>
+
+          <div class="essay-prose">
+            <p class="section-label">Autonomous handoff</p>
+            <h3>The policy times the handoff itself.</h3>
+            <p>
+              On mixed courses, the policy decides when to remain in
+              locomotion, enter a whole-body skill, and return&mdash;without a
+              runtime skill label or hand-authored switch.
+            </p>
+          </div>
+
+          <div class="result-pair essay-pair reveal">
+            <figure>
+              <div class="video-shell is-paused">
+                <video
+                  data-src="media/skill-skill.mp4"
+                  poster="media/skill-skill-poster-v2.jpg"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label="Direct transition between whole-body parkour skills"
+                ></video>
+                <div class="media-surface" aria-hidden="true"></div>
+                <div class="media-hud" aria-hidden="true">
+                  <span class="media-hud-eyebrow">Learned handoff</span>
+                </div>
+                <label class="media-timeline">
+                  <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek direct transition between whole-body parkour skills" />
+                  <output aria-hidden="true">0:00 / 0:00</output>
+                </label>
+                <button
+                  class="media-control"
+                  type="button"
+                  aria-label="Play direct transition between whole-body parkour skills"
+                >
+                  <span aria-hidden="true">Play</span>
+                </button>
+              </div>
+              <figcaption class="figure-caption">
+                <span>07</span>
+                <p>
+                  <strong>Skill-to-skill.</strong>
+                  A direct handoff between two whole-body skills.
+                </p>
+              </figcaption>
+            </figure>
+            <figure>
+              <div class="video-shell is-paused">
+                <video
+                  data-src="media/skill-loco.mp4"
+                  poster="media/skill-loco-poster-v2.jpg"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label="Transition from a whole-body skill to locomotion"
+                ></video>
+                <div class="media-surface" aria-hidden="true"></div>
+                <div class="media-hud" aria-hidden="true">
+                  <span class="media-hud-eyebrow">Learned handoff</span>
+                </div>
+                <label class="media-timeline">
+                  <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek transition from a whole-body skill to locomotion" />
+                  <output aria-hidden="true">0:00 / 0:00</output>
+                </label>
+                <button
+                  class="media-control"
+                  type="button"
+                  aria-label="Play transition from a whole-body skill to locomotion"
+                >
+                  <span aria-hidden="true">Play</span>
+                </button>
+              </div>
+              <figcaption class="figure-caption">
+                <span>08</span>
+                <p>
+                  <strong>Skill-to-locomotion.</strong>
+                  A direct return to commanded locomotion.
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <figure class="essay-figure reveal">
+            <div class="video-shell is-paused">
+              <video
+                data-src="media/stairs.mp4"
+                poster="media/stairs-poster-v2.jpg"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Lightbot 0 ascending and descending stairs"
+              ></video>
+              <div class="media-surface" aria-hidden="true"></div>
+              <div class="media-hud" aria-hidden="true">
+                <span class="media-hud-eyebrow">Hardware / zero-shot</span>
+              </div>
+              <label class="media-timeline">
+                <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek Lightbot 0 ascending and descending stairs" />
+                <output aria-hidden="true">0:00 / 0:00</output>
+              </label>
+              <button
+                class="media-control"
+                type="button"
+                aria-label="Play Lightbot 0 ascending and descending stairs"
+              >
+                <span aria-hidden="true">Play</span>
+              </button>
+            </div>
+            <figcaption class="figure-caption">
+              <span>09</span>
+              <p>
+                <strong>Stair ascent and descent.</strong>
+                Lightbot 0 uses onboard depth and the same deployable policy as
+                the whole-body skills.
+              </p>
+            </figcaption>
+          </figure>
+
+          <div class="essay-prose">
+            <p>
+              The same policy handles terrain between obstacles. On sparse
+              footholds, it places each foot from support geometry that may
+              already have left the camera&rsquo;s field of view, relying on
+              recurrent memory.
+            </p>
+          </div>
+        </section>
+
+        <div class="results-gallery page-width">
+          <div class="result-pair essay-pair reveal">
+            <figure>
+              <div class="video-shell is-paused">
+                <video
+                  data-src="media/narrow-bridge.mp4"
+                  poster="media/narrow-bridge-poster-v2.jpg"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label="Lightbot 0 crossing a narrow plank bridge"
+                ></video>
+                <div class="media-surface" aria-hidden="true"></div>
+                <div class="media-hud" aria-hidden="true">
+                  <span class="media-hud-eyebrow">Foothold control</span>
+                </div>
+                <label class="media-timeline">
+                  <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek Lightbot 0 crossing a narrow plank bridge" />
+                  <output aria-hidden="true">0:00 / 0:00</output>
+                </label>
+                <button
+                  class="media-control"
+                  type="button"
+                  aria-label="Play Lightbot 0 crossing a narrow plank bridge"
+                >
+                  <span aria-hidden="true">Play</span>
+                </button>
+              </div>
+              <figcaption class="figure-caption">
+                <span>10</span>
+                <p>
+                  <strong>Narrow plank bridge.</strong>
+                  Precise foot placement on a highly constrained support surface.
+                </p>
+              </figcaption>
+            </figure>
+            <figure>
+              <div class="video-shell is-paused">
+                <video
+                  data-src="media/stepping-stones.mp4"
+                  poster="media/stepping-stones-poster-v2.jpg"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-label="Lightbot 0 traversing sparse stepping stones"
+                ></video>
+                <div class="media-surface" aria-hidden="true"></div>
+                <div class="media-hud" aria-hidden="true">
+                  <span class="media-hud-eyebrow">Perceptive locomotion</span>
+                </div>
+                <label class="media-timeline">
+                  <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek Lightbot 0 traversing sparse stepping stones" />
+                  <output aria-hidden="true">0:00 / 0:00</output>
+                </label>
+                <button
+                  class="media-control"
+                  type="button"
+                  aria-label="Play Lightbot 0 traversing sparse stepping stones"
+                >
+                  <span aria-hidden="true">Play</span>
+                </button>
+              </div>
+              <figcaption class="figure-caption">
+                <span>11</span>
+                <p>
+                  <strong>Stepping stones.</strong>
+                  Foothold selection from onboard depth under partial
+                  observability.
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <section class="essay-section page-width" id="beyond">
+          <div class="essay-prose">
+            <p class="section-label">Beyond parkour</p>
+            <h2>Parkour is the testbed. Contact-rich autonomy is the larger goal.</h2>
+            <p>
+              As an early test beyond parkour, we apply the same pipeline to a
+              separate loco-manipulation policy. Trained with a rigid box, it
+              also carries a compliant ball unseen during training&mdash;an
+              encouraging but preliminary result across shape, mass, and
+              contact dynamics.
+            </p>
+          </div>
+          <figure class="essay-figure reveal">
+            <div class="video-shell is-paused">
+              <video
+                data-src="media/loco-manip.mp4"
+                poster="media/loco-manip-poster.jpg"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Humanoid approaching, lifting, and carrying bulky objects while walking"
+              ></video>
+              <div class="media-surface" aria-hidden="true"></div>
+              <div class="media-hud" aria-hidden="true">
+                <span class="media-hud-eyebrow">Loco-manipulation</span>
+              </div>
+              <label class="media-timeline">
+                <input class="media-scrubber" type="range" min="0" max="0" step="0.01" value="0" aria-label="Seek loco-manipulation results" />
+                <output aria-hidden="true">0:00 / 0:00</output>
+              </label>
+              <button
+                class="media-control"
+                type="button"
+                aria-label="Play loco-manipulation results"
+              >
+                <span aria-hidden="true">Play</span>
+              </button>
+            </div>
+            <figcaption class="figure-caption">
+              <span>12</span>
+              <p>
+                <strong>Trained on the box, carrying the ball.</strong>
+                No retraining for the new object.
+              </p>
+            </figcaption>
+          </figure>
+
+          <p class="essay-quote essay-coda reveal">
+            Parkour is where we started, not where the method ends. The aim is
+            a robot that can observe a contact-rich interaction once, practice
+            across geometry and dynamics in simulation, and carry the resulting
+            skill into the real world.
+          </p>
+        </section>
+
+        <section class="paper-endmatter page-width" id="paper">
+          <div class="essay-prose">
+            <p class="section-label">Paper</p>
+            <h2>LightParkour</h2>
+            <p class="paper-name">
+              Versatile Perceptive Whole-Body Locomotion via Multi-Skill
+              Distillation
+            </p>
+            <p class="paper-abstract">
+              LightParkour grows sparse contact-rich motion seeds into
+              terrain-paired reference distributions, unifies locomotion and
+              whole-body skills, and learns transitions from reward. The
+              recurrent depth policy transfers to Lightbot 0 without real-world
+              fine-tuning.
+            </p>
+            <div class="paper-links">
+              <a
+                href="paper.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read the paper <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                href="https://youtu.be/96Rfm7OmHjY"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Watch on YouTube <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="citation">
+            <div class="citation-head">
+              <span>BibTeX</span>
+              <button id="copy-citation" type="button">Copy citation</button>
+            </div>
+            <pre id="bibtex">@misc{chen2026lightlocoparkour,
+  title  = {
+    {Light-Loco-Parkour}: Versatile Perceptive
+    Whole-Body Locomotion via Multi-Skill Distillation
+  },
+  author = {
+    Chen, Hongming and
+    Li, Zhuoran and
+    Wang, Hongxi and
+    Hu, Jiangpeng and
+    Li, Ziliang and
+    Liu, Peize and
+    Zhao, QingRui and
+    Liu, Xuhao and
+    Pan, Liang and
+    Lyu, Ximin and
+    Ma, Yuntao and
+    Fan, Tingxiang
+  },
+  year   = {2026},
+  url    = {https://light-loco-parkour.github.io/}
+}</pre>
+          </div>
+        </section>
+      </article>
+
+      <footer class="page-width">
+        <p>
+          <strong>Light Origins</strong>
+          <span>Research · 2026</span>
+        </p>
+        <a href="#top">Back to top ↑</a>
+      </footer>
+    </main>
+
+    <script src="./hero-tree.js?v=37"></script>
+    <script src="./pipeline-flow.js"></script>
+    <script src="./surface-motion.js"></script>
+    <script src="./system-motion.js?v=3"></script>
+    <script>
+      (() => {
+        document.documentElement.classList.add("js-reveal");
+        const revealTargets = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+          const revealObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-visible");
+                revealObserver.unobserve(entry.target);
+              });
+            },
+            { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+          );
+          revealTargets.forEach((el) => revealObserver.observe(el));
+        } else {
+          revealTargets.forEach((el) => el.classList.add("is-visible"));
+        }
+
+        const menuButton = document.querySelector(".menu-button");
+        const navigation = document.querySelector(".topnav");
+
+        const closeMenu = () => {
+          navigation.classList.remove("open");
+          menuButton.setAttribute("aria-expanded", "false");
+        };
+
+        menuButton.addEventListener("click", () => {
+          const isOpen = navigation.classList.toggle("open");
+          menuButton.setAttribute("aria-expanded", String(isOpen));
+        });
+
+        navigation.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") closeMenu();
+        });
+
+        const motionSpaceFrame = document.querySelector(
+          "#transition-space-explorer",
+        );
+        window.addEventListener("message", (event) => {
+          if (event.source !== motionSpaceFrame?.contentWindow) return;
+          if (event.data?.type !== "lightlp-transition-space-height") return;
+
+          const nextHeight = Number(event.data.height);
+          if (!Number.isFinite(nextHeight)) return;
+          motionSpaceFrame.style.height =
+            Math.max(520, Math.min(1280, Math.ceil(nextHeight))) + "px";
+        });
+
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        document.querySelectorAll(".video-shell").forEach((shell) => {
+          const video = shell.querySelector("video");
+          const button = shell.querySelector(".media-control");
+          const buttonText = button.querySelector("span");
+          const scrubber = shell.querySelector(".media-scrubber");
+          const timecode = shell.querySelector(".media-timeline output");
+          const label = video.getAttribute("aria-label") || "video";
+          let userPaused = false;
+          let scrubWasPlaying = false;
+          let isScrubbing = false;
+
+          const formatTime = (seconds) => {
+            if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+            const wholeSeconds = Math.floor(seconds);
+            const minutes = Math.floor(wholeSeconds / 60);
+            return minutes + ":" + String(wholeSeconds % 60).padStart(2, "0");
+          };
+
+          const loadVideo = () => {
+            if (!video.getAttribute("src") && video.dataset.src) {
+              video.setAttribute("src", video.dataset.src);
+              video.load();
+            }
+          };
+
+          const updateButton = () => {
+            const action = video.paused ? "Play" : "Pause";
+            buttonText.textContent = action;
+            button.setAttribute("aria-label", action + " " + label);
+            shell.classList.toggle("is-paused", video.paused);
+            shell.classList.toggle("is-playing", !video.paused);
+          };
+
+          const syncTimeline = () => {
+            const duration = Number.isFinite(video.duration) ? video.duration : 0;
+            const currentTime = Math.min(video.currentTime || 0, duration || 0);
+            const percentage = duration ? (currentTime / duration) * 100 : 0;
+            scrubber.max = String(duration);
+            if (!isScrubbing) scrubber.value = String(currentTime);
+            scrubber.style.setProperty("--media-progress", percentage + "%");
+            scrubber.setAttribute(
+              "aria-valuetext",
+              formatTime(currentTime) + " of " + formatTime(duration),
+            );
+            timecode.textContent =
+              formatTime(currentTime) + " / " + formatTime(duration);
+          };
+
+          video.addEventListener("play", () => {
+            updateButton();
+          });
+          video.addEventListener("pause", updateButton);
+          video.addEventListener("loadedmetadata", syncTimeline);
+          video.addEventListener("durationchange", syncTimeline);
+          video.addEventListener("timeupdate", syncTimeline);
+
+          scrubber.addEventListener("input", () => {
+            loadVideo();
+            const duration = Number.isFinite(video.duration) ? video.duration : 0;
+            const nextTime = Number(scrubber.value);
+            if (!Number.isFinite(nextTime)) return;
+            video.currentTime = Math.max(0, Math.min(nextTime, duration));
+            syncTimeline();
+          });
+
+          scrubber.addEventListener("pointerdown", () => {
+            isScrubbing = true;
+            scrubWasPlaying = !video.paused;
+            shell.classList.add("is-scrubbing");
+            if (scrubWasPlaying) video.pause();
+          });
+
+          const finishScrubbing = () => {
+            if (!isScrubbing) return;
+            isScrubbing = false;
+            shell.classList.remove("is-scrubbing");
+            if (scrubWasPlaying && !userPaused) {
+              video.play().catch(updateButton);
+            }
+            scrubWasPlaying = false;
+          };
+
+          scrubber.addEventListener("pointerup", finishScrubbing);
+          scrubber.addEventListener("pointercancel", finishScrubbing);
+          scrubber.addEventListener("lostpointercapture", finishScrubbing);
+
+          button.addEventListener("click", () => {
+            loadVideo();
+            if (video.paused) {
+              userPaused = false;
+              video.play().catch(updateButton);
+            } else {
+              userPaused = true;
+              video.pause();
+            }
+          });
+
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              shell.classList.toggle("is-media-visible", entry.isIntersecting);
+              if (entry.isIntersecting) {
+                loadVideo();
+                if (!userPaused && !reducedMotion) {
+                  video.play().catch(updateButton);
+                }
+              } else {
+                video.pause();
+              }
+            },
+            { rootMargin: "240px 0px", threshold: 0.12 },
+          );
+
+          observer.observe(video);
+          document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+              video.pause();
+              return;
+            }
+
+            if (
+              shell.classList.contains("is-media-visible") &&
+              !userPaused &&
+              !reducedMotion
+            ) {
+              loadVideo();
+              video.play().catch(updateButton);
+            }
+          });
+          updateButton();
+          syncTimeline();
+        });
+
+        const copyButton = document.querySelector("#copy-citation");
+        const bibtex = document.querySelector("#bibtex").textContent;
+
+        const fallbackCopy = (text) => {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
+        };
+
+        copyButton.addEventListener("click", async () => {
+          try {
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(bibtex);
+            } else {
+              fallbackCopy(bibtex);
+            }
+            copyButton.textContent = "Copied";
+            window.setTimeout(() => {
+              copyButton.textContent = "Copy citation";
+            }, 1800);
+          } catch {
+            copyButton.textContent = "Select BibTeX below";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
